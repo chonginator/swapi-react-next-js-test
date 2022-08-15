@@ -1,0 +1,1 @@
+export const baseURL = 'https://www.swapi.tech/api/films/';
