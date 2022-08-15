@@ -1,18 +1,18 @@
-import { baseURL } from '../constants';
-import { useState, useEffect } from 'react';
+import { getSortedFilmsData } from "../utils/getSortedFilmsData";
 
-const Home = () => {
-  const [filmData, setFilmData] = useState([])
+export async function getStaticProps() {
+  const sortedFilmsData = await getSortedFilmsData();
 
-  // Fetch list of films from SWAPI
-  useEffect(() => {
-    fetch(baseURL)
-      .then(res => res.json())
-      .then(data => setFilmData(data.result))
-      .catch(error => console.error(error))
-  }, [])
+  return {
+    props: {
+      sortedFilmsData,
+    },
+  }
+}
 
-  const films = filmData.map(
+const Home = ({ sortedFilmsData }) => {
+
+  const films = sortedFilmsData.map(
     ({ properties, uid }) => {
       return (
         <article key={uid}>
@@ -21,6 +21,7 @@ const Home = () => {
       )
     }
   )
+
   return (
     <main>
       <h1>Star Wars Films</h1>
