@@ -1,4 +1,5 @@
-import { getSortedFilmsData } from "../utils/getSortedFilmsData";
+import Link from 'next/link';
+import { getSortedFilmsData } from "../utils/films";
 
 export async function getStaticProps() {
   const sortedFilmsData = await getSortedFilmsData();
@@ -10,14 +11,19 @@ export async function getStaticProps() {
   }
 }
 
+
 const Home = ({ sortedFilmsData }) => {
 
   const films = sortedFilmsData.map(
     ({ properties, uid }) => {
       return (
         <article key={uid}>
-          <h2>Star Wars: {properties.title}</h2>
-        </article>
+            <Link href={`/${uid}`}>
+              <a>
+                <h2>Star Wars: {properties.title}</h2>
+              </a>
+            </Link>
+          </article>
       )
     }
   )
