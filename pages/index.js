@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getSortedFilmsData } from '../utils/films';
 
 export async function getStaticProps() {
@@ -13,23 +13,36 @@ export async function getStaticProps() {
 }
 
 const Home = ({ sortedFilmsData }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [favouriteFilmsIds, setFavouriteFilmsIds] = useState([]);
+
+  // localStorage is not defined on the server-side so retrieve favourites in effect
+  useEffect(() => {
+    if (localStorage.hasOwnProperty('favouriteFilmsIds')) {
+      setFavouriteFilmsIds(
+        JSON.parse(localStorage.getItem('favouriteFilmsIds'))
+      );
+    }
+  }, []);
 
   const handleSearchQuery = event => {
     setSearchQuery(event.target.value);
-  }
+  };
 
   const toggleFavourite = uid => {
     setFavouriteFilmsIds(prevFavouriteFilmsIds => {
-      console.log(prevFavouriteFilmsIds.length);
-      const newFavouriteFilmsIds = prevFavouriteFilmsIds.filter(id => id !== uid);
-
-      return newFavouriteFilmsIds.length === prevFavouriteFilmsIds.length ?
-        newFavouriteFilmsIds.concat(uid) // Favourite film
-        : newFavouriteFilmsIds // Unfavourite film
-    })
-  }
+      // Unfavourite film
+      let newFavouriteFilmsIds = prevFavouriteFilmsIds.filter(id => id !== uid);
+      
+      // Favourite film
+      if (newFavouriteFilmsIds.length === prevFavouriteFilmsIds.length) {
+        newFavouriteFilmsIds.push(uid);
+      }
+      
+      localStorage.setItem('favouriteFilmsIds', JSON.stringify(newFavouriteFilmsIds));
+      return newFavouriteFilmsIds;
+    });
+  };
 
   const films = sortedFilmsData.filter(
     // Only show films that match the search query
@@ -75,7 +88,7 @@ const Home = ({ sortedFilmsData }) => {
       ></input>
       {films}
     </main>
-  )
+  );
 }
 
 export default Home;

@@ -24,7 +24,7 @@ const FilmPage = ({ filmData }) => {
         <Link href="/">Home</Link>
         <h1>Star Wars: {filmData.properties.title}</h1>
       </main>
-    )
+    );
 }
 
 export default FilmPage;
