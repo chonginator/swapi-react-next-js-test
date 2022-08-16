@@ -12,18 +12,42 @@ export async function getStaticProps() {
   }
 }
 
-
 const Home = ({ sortedFilmsData }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [favouriteFilmsIds, setFavouriteFilmsIds] = useState([]);
 
   const handleSearchQuery = event => {
-    setSearchQuery(event.target.value.toLowerCase());
+    setSearchQuery(event.target.value);
+  }
+
+  const toggleFavourite = uid => {
+    setFavouriteFilmsIds(prevFavouriteFilmsIds => {
+      console.log(prevFavouriteFilmsIds.length);
+      const newFavouriteFilmsIds = prevFavouriteFilmsIds.filter(id => id !== uid);
+
+      return newFavouriteFilmsIds.length === prevFavouriteFilmsIds.length ?
+        newFavouriteFilmsIds.concat(uid) // Favourite film
+        : newFavouriteFilmsIds // Unfavourite film
+    })
   }
 
   const films = sortedFilmsData.filter(
+    // Only show films that match the search query
     ({ properties }) => {
-      return properties.title.toLowerCase().includes(searchQuery);
-  }).map(
+      return properties.title.toLowerCase().includes(searchQuery.toLowerCase());
+  }).sort(
+    // Show favourited films at the top
+    (filmA, filmB) => {
+      const filmAFavourited = favouriteFilmsIds.includes(filmA.uid);
+      const filmBFavourited = favouriteFilmsIds.includes(filmB.uid);
+
+      if (!filmAFavourited && filmBFavourited) {
+        return 1;
+      } else if (filmAFavourited && !filmBFavourited) {
+        return -1;
+      }
+    }    
+  ).map(
     ({ properties, uid }) => {
       return (
         <article key={uid}>
@@ -32,11 +56,14 @@ const Home = ({ sortedFilmsData }) => {
                 <h2>{properties.title}</h2>
               </a>
             </Link>
-          </article>
+            <button onClick={() => toggleFavourite(uid)}>
+              {favouriteFilmsIds.includes(uid) ? 'Unfavourite' : 'Favourite'}
+            </button>
+        </article>
       );
     }
   );
-
+    
   return (
     <main>
       <h1>Star Wars Films</h1>
@@ -52,5 +79,3 @@ const Home = ({ sortedFilmsData }) => {
 }
 
 export default Home;
-
-
