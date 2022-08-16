@@ -1,4 +1,4 @@
-import { baseURL } from "../constants";
+import { baseURL } from '../constants';
 
 async function getFilmsData() {
     const res = await fetch(baseURL);

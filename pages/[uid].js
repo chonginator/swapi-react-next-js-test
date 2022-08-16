@@ -1,4 +1,5 @@
-import { getAllFilmIds, getFilmData } from "../utils/films";
+import Link from 'next/link';
+import { getAllFilmIds, getFilmData } from '../utils/films';
 
 export async function getStaticPaths() {
   return {
@@ -20,6 +21,7 @@ export async function getStaticProps({ params }) {
 const FilmPage = ({ filmData }) => {
     return (
       <main>
+        <Link href="/">Home</Link>
         <h1>Star Wars: {filmData.properties.title}</h1>
       </main>
     )
