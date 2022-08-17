@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getAllFilmIds, getFilmData } from '../utils/films';
 import { getResources } from '../utils/resources';
+import Character from '../components/Character';
 
 export async function getStaticPaths() {
   return {
@@ -12,23 +13,38 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const filmData = await getFilmData(params.uid);
   const charactersData = await getResources(filmData.properties.characters);
+  const planetsData = await getResources(filmData.properties.planets);
+  const speciesData = await getResources(filmData.properties.species);
+  const starshipsData = await getResources(filmData.properties.starships);
+  const vehiclesData = await getResources(filmData.properties.vehicles);
 
   return {
     props: {
       filmData,
       charactersData,
+      planetsData,
+      speciesData,
+      starshipsData,
+      vehiclesData,
     },
   }
 }
 
-const FilmPage = ({ filmData, charactersData }) => {
+const FilmPage = ({
+  filmData,
+  charactersData,
+  planetsData,
+  speciesData,
+  starshipsData,
+  vehiclesData,
+}) => {
     const {
       title,
       episode_id: episodeId,
       release_date: releaseDate,
       director,
       producer,
-      planets,
+      // planets,
       species,
       starships,
       vehicles
@@ -36,24 +52,30 @@ const FilmPage = ({ filmData, charactersData }) => {
 
     const characters = charactersData.map(
       ({ properties, uid }) => {
+        return <Character uid={uid} data={properties} /> 
+      } 
+    )
+
+    const planets = planetsData.map(
+      ({ properties, uid }) => {
         const {
           name,
-          birth_year: birthYear,
-          eye_color: eyeColour,
-          gender,
-          hair_color: hairColour,
-        } = properties
+          population,
+          climate,
+          terrain,
+          diameter
+        } = properties;
 
         return (
           <article key={uid}>
             <h3>{name}</h3>
-            <p>Birth Year: {birthYear}</p>
-            <p>Gender: {gender}</p>
-            <p>Eye Colour: {eyeColour}</p>
-            <p>Hair Colour: {hairColour}</p>
+            <p>Population: {population}</p>
+            <p>Climate: {climate}</p>
+            <p>Terrain: {terrain}</p>
+            <p>Diameter: {diameter}</p>
           </article>
         )
-      } 
+      }
     )
 
     return (
@@ -79,6 +101,9 @@ const FilmPage = ({ filmData, charactersData }) => {
           <section>
             <h2>Planets</h2>
             <p>{planets.length} planets</p>
+            <div>
+              {planets}
+            </div>
           </section>
 
           <section>
