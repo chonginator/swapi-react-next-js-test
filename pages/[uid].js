@@ -17,19 +17,19 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const filmData = await getFilmData(params.uid);
   const charactersData = await getResources(filmData.properties.characters);
-  const planetsData = await getResources(filmData.properties.planets);
-  const speciesData = await getResources(filmData.properties.species);
-  const starshipsData = await getResources(filmData.properties.starships);
-  const vehiclesData = await getResources(filmData.properties.vehicles);
+  // const planetsData = await getResources(filmData.properties.planets);
+  // const speciesData = await getResources(filmData.properties.species);
+  // const starshipsData = await getResources(filmData.properties.starships);
+  // const vehiclesData = await getResources(filmData.properties.vehicles);
 
   return {
     props: {
       filmData,
       charactersData,
-      planetsData,
-      speciesData,
-      starshipsData,
-      vehiclesData,
+      // planetsData,
+      // speciesData,
+      // starshipsData,
+      // vehiclesData,
     },
   }
 }
@@ -37,10 +37,10 @@ export async function getStaticProps({ params }) {
 const FilmPage = ({
   filmData,
   charactersData,
-  planetsData,
-  speciesData,
-  starshipsData,
-  vehiclesData,
+  // planetsData,
+  // speciesData,
+  // starshipsData,
+  // vehiclesData,
 }) => {
     const {
       title,
@@ -48,7 +48,7 @@ const FilmPage = ({
       release_date: releaseDate,
       director,
       producer,
-      // planets,
+      planets,
       species,
       starships,
       vehicles
@@ -58,28 +58,6 @@ const FilmPage = ({
       ({ properties, uid }) => {
         return <Character uid={uid} data={properties} /> 
       } 
-    )
-
-    const planets = planetsData.map(
-      ({ properties, uid }) => {
-        const {
-          name,
-          population,
-          climate,
-          terrain,
-          diameter
-        } = properties;
-
-        return (
-          <article key={uid}>
-            <h3>{name}</h3>
-            <p>Population: {population}</p>
-            <p>Climate: {climate}</p>
-            <p>Terrain: {terrain}</p>
-            <p>Diameter: {diameter}</p>
-          </article>
-        )
-      }
     )
 
     return (
@@ -110,9 +88,6 @@ const FilmPage = ({
           <section>
             <h2>Planets</h2>
             <p>{planets.length} planets</p>
-            <div>
-              {planets}
-            </div>
           </section>
 
           <section>
