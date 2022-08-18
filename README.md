@@ -15,3 +15,5 @@ Film page should contain a back to home link
 - [x] Use SCSS for styling
 - [x] Use Flexbox or CSS grid for layouts - avoid Bootstrap etc
 - [x] Host the finished project on Vercel or similar
+
+- [x] BONUS: Custom 404 page :)
