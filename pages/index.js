@@ -1,6 +1,10 @@
-import Link from 'next/link';
+import styles from '../styles/Home.module.scss';
+// import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { getSortedFilmsData } from '../utils/films';
+// import Button from '../components/Button';
+import FilmCard from '../components/FilmCard';
+import SearchBar from '../components/SearchBar';
 
 export async function getStaticProps() {
   const sortedFilmsData = await getSortedFilmsData();
@@ -63,30 +67,46 @@ const Home = ({ sortedFilmsData }) => {
   ).map(
     ({ properties, uid }) => {
       return (
-        <article key={uid}>
-            <Link href={`/${uid}`}>
-              <a>
-                <h2>{properties.title}</h2>
-              </a>
-            </Link>
-            <button onClick={() => toggleFavourite(uid)}>
-              {favouriteFilmsIds.includes(uid) ? 'Unfavourite' : 'Favourite'}
-            </button>
-        </article>
+        <FilmCard
+          uid={uid}
+          data={properties}
+          isFavourited={favouriteFilmsIds.includes(uid)}
+          toggleFavourite={() => toggleFavourite(uid)}
+        />
+        // <article key={uid}>
+        //     <Link href={`/${uid}`}>
+        //       <a className={styles.link}>
+        //         <h2>{properties.title}</h2>
+        //       </a>
+        //     </Link>
+        //     <Button onClick={() => toggleFavourite(uid)}>
+        //       {favouriteFilmsIds.includes(uid) ? '[forget]' : '[favourite]'}
+        //     </Button>
+        // </article>
       );
     }
   );
     
   return (
-    <main>
-      <h1>Star Wars Films</h1>
-      <input
+    <main className={styles.home}>
+      <h1 className={styles.title}>Star Wars Films</h1>
+      <div>
+        {/* <label>Search your feelings...</label> */}
+        <SearchBar
+          placeholder="Search Star Wars films..."
+          value={searchQuery}
+          onChange={handleSearchQuery}
+        />
+      </div>
+      {/* <input
         type="search"
         placeholder="Search Star Wars films..."
         value={searchQuery}
         onChange={handleSearchQuery}
-      ></input>
-      {films}
+      ></input> */}
+      <div className={styles.films}>
+        {films}
+      </div>
     </main>
   );
 }

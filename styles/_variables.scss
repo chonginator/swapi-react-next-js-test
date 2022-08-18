@@ -1,0 +1,23 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;700&display=swap');
+@font-face {
+    font-family: 'Aurebesh';
+    src: url('../fonts/SceletAFAurebesh.otf');
+}
+
+$sans: 'IBM Plex Mono', monospace;
+$aurebesh: 'Aurebesh';
+
+// Weights
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 700;
+
+// Colours
+$text: #5284f8;
+$primary: #040718;
+$highlight: #f3b071;
+
+// Screen size breakpoints
+$mobile: 640px;
+$tablet: 768px;

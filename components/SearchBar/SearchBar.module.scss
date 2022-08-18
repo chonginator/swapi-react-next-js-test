@@ -1,0 +1,15 @@
+@import '../../styles/variables';
+
+.search {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid $text;
+    outline: none;
+    color: $highlight;
+    caret-color: $highlight;
+
+    &::-webkit-search-cancel-button {
+        display: none;
+    }
+}

@@ -1,0 +1,46 @@
+@import '../../styles/variables';
+
+.card {
+    // border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid $text;
+    border-radius: 8px;
+    padding: 1em;
+}
+
+.cardFavourited {
+    border: 1px solid $highlight;
+    border-radius: 8px;
+}
+
+.card__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // border: 1px solid red;
+}
+
+.card__body {
+    // border: 1px solid red;
+    width: 100%;
+}
+
+.episode {
+    font-size: 1.25rem;
+    font-weight: $font-bold;
+    color: $highlight;
+}
+
+.subtitle {
+    font-family: $aurebesh;
+}
+
+.link {
+    &:focus,
+    &:hover {
+        color: lighten($text, 10%);
+    }
+}

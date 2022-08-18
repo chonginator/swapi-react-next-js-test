@@ -1,0 +1,21 @@
+@import './variables';
+
+.home {
+    display: grid;
+    gap: 1em;
+}
+
+.title {
+    font-size: 5rem;
+    font-weight: $font-light;
+}
+
+.films {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+    
+    @media(min-width: $tablet) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,7 +1,11 @@
+import styles from '../styles/[uid].module.scss';
 import Link from 'next/link';
 import { getAllFilmIds, getFilmData } from '../utils/films';
 import { getResources } from '../utils/resources';
+import Button from '../components/Button';
 import Character from '../components/Character';
+
+const romans = require('romans');
 
 export async function getStaticPaths() {
   return {
@@ -81,11 +85,16 @@ const FilmPage = ({
     return (
       <>
         <header>
-          <Link href="/">Home</Link>
+          <Button>
+            <Link href="/">[Home]</Link>
+          </Button>
         </header>
 
         <main>
-          <h1>Star Wars: Episode {episodeId} — {title}</h1>
+          <h1 className={styles.title}>
+            Star Wars Episode {romans.romanize(episodeId)}:<br/>
+            {title}
+          </h1>
           <p>Director: {director}</p>
           <p>Producer: {producer}</p>
           <p>Release date: {releaseDate}</p>
