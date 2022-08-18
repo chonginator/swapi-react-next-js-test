@@ -44,7 +44,7 @@ const FilmPage = ({
 
     const characters = charactersData.map(
       ({ properties, uid }) => {
-        return <CharacterCard uid={uid} data={properties} /> 
+        return <CharacterCard key={uid} uid={uid} data={properties} /> 
       } 
     );
 

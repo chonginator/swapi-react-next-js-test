@@ -25,7 +25,7 @@ const CharacterCard = ({
     );
 
     return (
-        <div key={uid} className={styles.card}>
+        <div className={styles.card}>
             <Tooltip content={tooltipContent} placement="left">
                 <p>{name}</p>
             </Tooltip>

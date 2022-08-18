@@ -12,7 +12,6 @@ const FilmCard = ({
 }) => {
     return (
         <article
-            key={uid}
             className={`${styles.card} ${isFavourited ? styles.cardFavourited : ''}`}
         >
             <div className={styles.card__header}>
