@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getAllFilmIds, getFilmData } from '../utils/films';
 import { getResources } from '../utils/resources';
 import Button from '../components/Button';
-import Character from '../components/Character';
+import CharacterCard from '../components/CharacterCard';
 
 const romans = require('romans');
 
@@ -17,19 +17,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const filmData = await getFilmData(params.uid);
   const charactersData = await getResources(filmData.properties.characters);
-  // const planetsData = await getResources(filmData.properties.planets);
-  // const speciesData = await getResources(filmData.properties.species);
-  // const starshipsData = await getResources(filmData.properties.starships);
-  // const vehiclesData = await getResources(filmData.properties.vehicles);
 
   return {
     props: {
       filmData,
       charactersData,
-      // planetsData,
-      // speciesData,
-      // starshipsData,
-      // vehiclesData,
     },
   }
 }
@@ -37,10 +29,6 @@ export async function getStaticProps({ params }) {
 const FilmPage = ({
   filmData,
   charactersData,
-  // planetsData,
-  // speciesData,
-  // starshipsData,
-  // vehiclesData,
 }) => {
     const {
       title,
@@ -56,53 +44,51 @@ const FilmPage = ({
 
     const characters = charactersData.map(
       ({ properties, uid }) => {
-        return <Character uid={uid} data={properties} /> 
+        return <CharacterCard uid={uid} data={properties} /> 
       } 
-    )
+    );
 
     return (
       <>
         <header>
           <Button>
-            <Link href="/">[Home]</Link>
+            <Link href="/">[home]</Link>
           </Button>
         </header>
 
-        <main>
+        <main className={styles.film}>
           <h1 className={styles.title}>
             Star Wars Episode {romans.romanize(episodeId)}:<br/>
             {title}
           </h1>
-          <p>Director: {director}</p>
-          <p>Producer: {producer}</p>
-          <p>Release date: {releaseDate}</p>
+
+          <section className={styles.filmInfo}>
+            <p>Director: {director}</p>
+            <p>Producer: {producer}</p>
+            <p>Release date: {releaseDate}</p>
+          </section>
 
           <section>
-            <h2>Characters</h2>
-            <p>{characters.length} characters</p>
-            <div>
+            <h2>Characters <span>({characters.length})</span></h2>
+            <div className={styles.characters}>
               {characters}
             </div>
           </section>
 
           <section>
-            <h2>Planets</h2>
-            <p>{planets.length} planets</p>
+            <h2>Planets <span>({planets.length})</span></h2>
           </section>
 
           <section>
-            <h2>Species</h2>
-            <p>{species.length} species</p>
+            <h2>Species <span>({species.length})</span></h2>
           </section>
 
           <section>
-            <h2>Starships</h2>
-            <p>{starships.length} starships</p>
+            <h2>Starships <span>({starships.length})</span></h2>
           </section>
 
           <section>
-            <h2>Vehicles</h2>
-            <p>{vehicles.length} vehicles</p>
+            <h2>Vehicles <span>({vehicles.length})</span></h2>
           </section>
         </main>
       </>

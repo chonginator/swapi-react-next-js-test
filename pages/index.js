@@ -1,8 +1,6 @@
 import styles from '../styles/Home.module.scss';
-// import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { getSortedFilmsData } from '../utils/films';
-// import Button from '../components/Button';
 import FilmCard from '../components/FilmCard';
 import SearchBar from '../components/SearchBar';
 
@@ -31,7 +29,7 @@ const Home = ({ sortedFilmsData }) => {
 
   const handleSearchQuery = event => {
     setSearchQuery(event.target.value);
-  };
+  }
 
   const toggleFavourite = uid => {
     setFavouriteFilmsIds(prevFavouriteFilmsIds => {
@@ -46,43 +44,34 @@ const Home = ({ sortedFilmsData }) => {
       localStorage.setItem('favouriteFilmsIds', JSON.stringify(newFavouriteFilmsIds));
       return newFavouriteFilmsIds;
     });
-  };
+  }
 
   const films = sortedFilmsData.filter(
     // Only show films that match the search query
     ({ properties }) => {
       return properties.title.toLowerCase().includes(searchQuery.toLowerCase());
-  }).sort(
-    // Show favourited films at the top
-    (filmA, filmB) => {
-      const filmAFavourited = favouriteFilmsIds.includes(filmA.uid);
-      const filmBFavourited = favouriteFilmsIds.includes(filmB.uid);
+    }).sort(
+      // Show favourited films at the top
+      (filmA, filmB) => {
+        const filmAFavourited = favouriteFilmsIds.includes(filmA.uid);
+        const filmBFavourited = favouriteFilmsIds.includes(filmB.uid);
 
-      if (!filmAFavourited && filmBFavourited) {
-        return 1;
-      } else if (filmAFavourited && !filmBFavourited) {
-        return -1;
-      }
-    }    
+        if (!filmAFavourited && filmBFavourited) {
+          return 1;
+        } else if (filmAFavourited && !filmBFavourited) {
+          return -1;
+        }
+      }    
   ).map(
     ({ properties, uid }) => {
       return (
         <FilmCard
+          key={uid}
           uid={uid}
           data={properties}
           isFavourited={favouriteFilmsIds.includes(uid)}
           toggleFavourite={() => toggleFavourite(uid)}
         />
-        // <article key={uid}>
-        //     <Link href={`/${uid}`}>
-        //       <a className={styles.link}>
-        //         <h2>{properties.title}</h2>
-        //       </a>
-        //     </Link>
-        //     <Button onClick={() => toggleFavourite(uid)}>
-        //       {favouriteFilmsIds.includes(uid) ? '[forget]' : '[favourite]'}
-        //     </Button>
-        // </article>
       );
     }
   );
@@ -91,19 +80,12 @@ const Home = ({ sortedFilmsData }) => {
     <main className={styles.home}>
       <h1 className={styles.title}>Star Wars Films</h1>
       <div>
-        {/* <label>Search your feelings...</label> */}
         <SearchBar
-          placeholder="Search Star Wars films..."
+          placeholder="Search your feelings..."
           value={searchQuery}
           onChange={handleSearchQuery}
         />
       </div>
-      {/* <input
-        type="search"
-        placeholder="Search Star Wars films..."
-        value={searchQuery}
-        onChange={handleSearchQuery}
-      ></input> */}
       <div className={styles.films}>
         {films}
       </div>

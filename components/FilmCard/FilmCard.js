@@ -25,8 +25,8 @@ const FilmCard = ({
                 </Button>
             </div>
             <div className={styles.card__body}>
-                <Link href={`/${uid}`} className={styles.link}>
-                    <a>
+                <Link href={`/${uid}`}>
+                    <a className={styles.link}>
                         <h2>
                             {data.title}
                         </h2>

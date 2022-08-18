@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import Tooltip from '../components/Tooltip';
+import styles from './CharacterCard.module.scss';
+import Tooltip from '../Tooltip';
 
-const Character = ({
+const CharacterCard = ({
     uid,
     data,
 }) => {
@@ -14,7 +14,9 @@ const Character = ({
     } = data;
 
     const tooltipContent = (
-        <div>
+        <div className={styles.tooltip}>
+            <p>Name: {name}</p>
+            <p className={styles.aurebesh}>{name}</p>
             <p>Birth Year: {birthYear}</p>
             <p>Gender: {gender}</p>
             <p>Eye Colour: {eyeColour}</p>
@@ -23,12 +25,12 @@ const Character = ({
     );
 
     return (
-        <article key={uid}>
-            <Tooltip content={tooltipContent}>
-                <h3>{name}</h3>
+        <div key={uid} className={styles.card}>
+            <Tooltip content={tooltipContent} placement="left">
+                <p>{name}</p>
             </Tooltip>
-        </article>
-    )
+        </div>
+    );
 }
 
-export default Character;
+export default CharacterCard;

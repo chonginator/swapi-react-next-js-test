@@ -1,7 +1,8 @@
 import styles from './Button.module.scss';
 
 const Button = ({
-    children, ...delegated
+    children,
+    ...delegated
 }) => {
     return (
         <button
@@ -10,7 +11,7 @@ const Button = ({
         >
             {children}
         </button>
-    )
+    );
 }
 
 export default Button;

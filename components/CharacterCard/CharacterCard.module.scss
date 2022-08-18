@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+.card {
+    &:hover {
+        cursor: pointer;
+        color: lighten($text, 10%);
+    }
+}
+
+.tooltip {
+    border: 1px dotted $highlight;
+    background: $primary;
+    padding: 1em;
+}
+
+.aurebesh {
+    font-family: $aurebesh;
+    color: $gray;
+}

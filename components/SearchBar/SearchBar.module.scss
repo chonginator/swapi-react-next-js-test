@@ -12,4 +12,8 @@
     &::-webkit-search-cancel-button {
         display: none;
     }
+
+    &::placeholder {
+        color: $gray;
+    }
 }

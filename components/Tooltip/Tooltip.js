@@ -1,11 +1,11 @@
 import Tippy from '@tippyjs/react';
 
-const Tooltip = ({ content, children}) => {
+const Tooltip = ({ children, ...delegated }) => {
     return (
-        <Tippy content={content}>
+        <Tippy {...delegated}>
             {children}
         </Tippy>
-    )
+    );
 }
 
 export default Tooltip;
